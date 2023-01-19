@@ -1,5 +1,5 @@
 import random
-import scipy.stats as stats
+from scipy.stats import norm
 import math
 import matplotlib.pyplot as plt
 import numpy as np
@@ -48,11 +48,15 @@ class Shape:
         self.generate_lines()
         
     def generate_lines(self):
-        a, b = -0.3, 0.3
-        mu, sigma = 0.0, self.sd 
-        dist = stats.truncnorm((a - mu) / sigma, (b - mu) / sigma, loc=mu, scale=sigma)
-        values = dist.rvs(self.num_lines)
-        
+
+        values = np.random.rand(self.num_lines)
+
+        # Scale the values to be between -0.2 and 0.2
+        values = values * 0.4 - 0.2
+
+        # Shift the values so that the total is 0
+        values = values - np.sum(values) / len(values)
+
         for i,value in enumerate(values):
             self.facing += value
             self.lines[i+1][0], self.lines[i+1][1] = math.cos(self.facing * np.pi) + self.lines[i][0], math.sin(self.facing * np.pi)+ self.lines[i][1]
@@ -99,21 +103,37 @@ class Shape:
 # plt.scatter(lines[0][:, 0], lines[0][:, 1])
 # plt.show()
 
-start = np.array([3,4])
-end = np.array([15,3])
+# start = np.array([3,4])
+# end = np.array([15,3])
 
-shape = Shape(30, 0.1)
-
-
-
-facing = np.arctan2(end[1]-start[1], end[0]-start[0])
-
-rotation = np.array([[math.cos(facing * np.pi), math.sin(facing * np.pi)],
-                    [-math.sin(facing * np.pi), math.cos(facing * np.pi)]])
-new = (shape.lines  + start) @ rotation
+# shape = Shape(30, 0.1)
 
 
-plt.scatter(shape.lines[:, 0], shape.lines[:, 1])
 
-plt.scatter(new[:, 0], new[:, 1])
-plt.show()
+# facing = np.arctan2(end[1]-start[1], end[0]-start[0])
+
+# rotation = np.array([[math.cos(facing * np.pi), math.sin(facing * np.pi)],
+#                     [-math.sin(facing * np.pi), math.cos(facing * np.pi)]])
+# new = (shape.lines  + start) @ rotation
+
+
+# plt.scatter(shape.lines[:, 0], shape.lines[:, 1])
+
+# plt.scatter(new[:, 0], new[:, 1])
+# plt.show()
+
+
+
+# a, b = -0.3, 0.3
+# mu, sigma = 0.0, 0.1
+# values = norm.rvs(loc=mu, scale=sigma, size= 1000, random_state=None)
+# total = 0
+# for i in values:
+#     total += i
+
+# print(total)
+
+
+
+
+
