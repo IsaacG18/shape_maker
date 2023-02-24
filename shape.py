@@ -103,24 +103,22 @@ class Shape:
 # plt.scatter(lines[0][:, 0], lines[0][:, 1])
 # plt.show()
 
-# start = np.array([3,4])
-# end = np.array([15,3])
+start = np.array([3,4])
+end = np.array([15,3])
 
-# shape = Shape(30, 0.1)
+shape = Shape(30, 0.1)
 
+facing = np.arctan2(end[1]-start[1], end[0]-start[0])
 
-
-# facing = np.arctan2(end[1]-start[1], end[0]-start[0])
-
-# rotation = np.array([[math.cos(facing * np.pi), math.sin(facing * np.pi)],
-#                     [-math.sin(facing * np.pi), math.cos(facing * np.pi)]])
-# new = (shape.lines  + start) @ rotation
+rotation = np.array([[math.cos(facing * np.pi), math.sin(facing * np.pi)],
+                    [-math.sin(facing * np.pi), math.cos(facing * np.pi)]])
+new = (shape.lines  + start) @ rotation
 
 
-# plt.scatter(shape.lines[:, 0], shape.lines[:, 1])
+plt.scatter(shape.lines[:, 0], shape.lines[:, 1])
 
-# plt.scatter(new[:, 0], new[:, 1])
-# plt.show()
+plt.scatter(new[:, 0], new[:, 1])
+plt.show()
 
 
 
